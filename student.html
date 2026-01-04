@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="card">
+      <h1 class="title">My Details</h1>
+
+      <p><strong>Full Name:</strong> <span id="fullName"></span></p>
+    <p><strong>Father Name:</strong> <span id="fatherName"></span></p>
+    <p><strong>Gender:</strong> <span id="gender"></span></p>
+    <p><strong>DOB:</strong> <span id="dob"></span></p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
+    <p><strong>Phone:</strong> <span id="phone"></span></p>
+    <p><strong>Course:</strong> <span id="course"></span></p>
+    <p><strong>Batch:</strong> <span id="batch"></span></p>
+    <p><strong>CGPA:</strong> <span id="cgpa"></span></p>
+    <p><strong>Arrears:</strong> <span id="arrears"></span></p>
+    <p><strong>Roll No:</strong> <span id="rollNo"></span></p>
+    <p><strong>Address:</strong> <span id="address"></span></p>
+    <p><strong>Placed:</strong> <span id="placed"></span></p>
+    </div>
+  </div>
+
+  <script>
+    const role  = localStorage.getItem('userRole');
+    const userId = localStorage.getItem('userId');
+
+    // 1) If not logged in as student, send back to login
+    if (role !== 'student' || !userId) {
+      window.location.href = 'login.html';
+    } else {
+      // 2) Fetch ONLY this student's data from backend
+      fetch(`http://localhost:3000/api/students/${userId}`)
+  .then(res => res.json())
+  .then(s => {
+    document.getElementById('fullName').textContent =
+      `${s.firstName || ''} ${s.lastName || ''}`;
+    document.getElementById('fatherName').textContent = s.fatherName || '';
+    document.getElementById('gender').textContent     = s.gender || '';
+    document.getElementById('dob').textContent =
+      s.dob ? new Date(s.dob).toLocaleDateString() : '';
+    document.getElementById('email').textContent      = s.email || '';
+    document.getElementById('phone').textContent      = s.mobileNumber || '';
+    document.getElementById('course').textContent     = s.course || '';
+    document.getElementById('batch').textContent      = s.batchNo || '';
+    document.getElementById('cgpa').textContent       = s.cgpa ?? '';
+    document.getElementById('arrears').textContent    = s.noOfArrears ?? '';
+    document.getElementById('rollNo').textContent     = s.rollNo || '';
+    document.getElementById('address').textContent    = s.address || '';
+    document.getElementById('placed').textContent     = s.placed ? 'Yes' : 'No';
+  })
+  .catch(() => {
+    alert('Error loading your details');
+  });
+
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Officer Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <body class="officer-page">
+
+  <div class="page-wrapper page-wrapper-wide">
+    <div class="card card-wide">
+      <h1 class="title">Students Record</h1>
+
+      <div class="table-wrapper">
+        <table class="students-table" id="studentsTable">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Full Name</th>
+              <th>Father Name</th>
+              <th>Gender</th>
+              <th>DOB</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Course</th>
+              <th>Batch</th>
+              <th>CGPA</th>
+              <th>Arrears</th>
+              <th>Placed</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const role = localStorage.getItem('userRole');
+    if (role !== 'officer') {
+      window.location.href = 'login.html';
+    } else {
+      fetch('http://localhost:3000/api/students')
+        .then(res => res.json())
+        .then(list => {
+          const tbody = document.querySelector('#studentsTable tbody');
+          tbody.innerHTML = '';
+
+          list.forEach((s, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${index + 1}</td>
+              <td>${s.firstName || ''} ${s.lastName || ''}</td>
+              <td>${s.fatherName || ''}</td>
+              <td>${s.gender || ''}</td>
+              <td>${s.dob ? new Date(s.dob).toLocaleDateString() : ''}</td>
+              <td>${s.email || ''}</td>
+              <td>${s.mobileNumber || ''}</td>
+              <td>${s.course || ''}</td>
+              <td>${s.batchNo || ''}</td>
+              <td>${s.cgpa ?? ''}</td>
+              <td>${s.noOfArrears ?? ''}</td>
+              <td>${s.placed ? 'Yes' : 'No'}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(() => {
+          document.querySelector('#studentsTable tbody').innerHTML =
+            '<tr><td colspan="12">Error loading students.</td></tr>';
+        });
+    }
+  </script>
+</body>
+</html>

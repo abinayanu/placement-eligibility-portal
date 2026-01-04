@@ -1,0 +1,313 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #00529b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  width: 360px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 30px 35px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  text-align: left;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 22px;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  font-size: 14px;
+}
+
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 10px;
+  background: #2ca02c;
+  color: #ffffff;
+  border: none;
+  border-radius: 2px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #228822;
+}
+
+.secondary {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.link-small {
+  font-size: 12px;
+  text-decoration: none;
+  color: #3366cc;
+}
+
+.link-main {
+  text-decoration: none;
+  color: #3366cc;
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.back-login-wrapper {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.btn-back {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 3px;
+  border: 1px solid #2ca02c;
+  color: #2ca02c;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.btn-back:hover {
+  background: #2ca02c;
+  color: #ffffff;
+}
+
+.center {
+  text-align: center;
+}
+
+
+.page-wrapper-wide {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.card-wide {
+  width: 100%;
+}
+
+.form-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-item input,
+.form-item select,
+.form-item textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;   
+  border-radius: 2px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+#address {
+  resize: none;
+  height: 40px;
+  line-height: 20px;
+  overflow-y: auto;
+}
+
+.form-full {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-actions .btn-primary {
+  width: 40%;
+  min-width: 220px;
+}
+
+
+.officer-page {
+  background: #ffffff;
+  display: block;
+  min-height: 100vh;
+  padding: 24px 32px;
+}
+
+.officer-page .page-wrapper,
+.officer-page .page-wrapper-wide {
+  width: 100%;
+  max-width: none;
+}
+
+.officer-page .card-wide {
+  width: 100%;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.officer-page .title {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 24px;
+  color: #16a34a;
+}
+
+.officer-page .table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+
+.officer-page .students-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: auto;            
+}
+.officer-page .students-table thead {
+  background-color: #2563eb;  
+}
+
+
+.officer-page .students-table th,
+.officer-page .students-table td {
+  border: 1px solid #e5e7eb;
+  padding: 8px 10px;
+  text-align: left;
+  white-space: nowrap;           
+  overflow: hidden;
+  text-overflow: ellipsis;       
+}
+
+.officer-page .students-table th:nth-child(1),
+.officer-page .students-table td:nth-child(1) { width: 40px; }   
+
+.officer-page .students-table th:nth-child(4),
+.officer-page .students-table td:nth-child(4) { width: 70px; }   
+
+.officer-page .students-table th:nth-child(5),
+.officer-page .students-table td:nth-child(5) { width: 100px; }  
+
+.officer-page .students-table th:nth-child(8),
+.officer-page .students-table td:nth-child(8) { width: 80px; }   
+
+.officer-page .students-table th:nth-child(9),
+.officer-page .students-table td:nth-child(9) { width: 70px; }   
+
+.officer-page .students-table th:nth-child(10),
+.officer-page .students-table td:nth-child(10) { width: 60px; }  
+
+.officer-page .students-table th:nth-child(11),
+.officer-page .students-table td:nth-child(11) { width: 60px; }  
+
+.officer-page .students-table th:nth-child(12),
+.officer-page .students-table td:nth-child(12) { width: 70px; }  
+
+
+.officer-page .students-table thead {
+  background-color: #f3f4f6;
+}
+
+.officer-page .students-table th {
+  font-weight: 600;
+}
+
+.officer-page .students-table tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.officer-page .students-table tbody tr:hover {
+  background-color: #eef2ff;
+}
+
+
+#cgpa::-webkit-inner-spin-button,
+#cgpa::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#cgpa {
+  -moz-appearance: textfield;
+}
+
+/* FORCE same style for both role buttons */
+.role-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* more specific selector to beat older button styles */
+.page-wrapper .card .role-buttons .btn-role {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: none;
+  background-color: #16a34a;   /* green */
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+}
+
+.page-wrapper .card .role-buttons .btn-role:hover {
+  background-color: #15803d;
+}
+
+

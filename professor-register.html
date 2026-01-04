@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create professor account</title>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper page-wrapper-wide">
+    <div class="card card-wide">
+      <h1 class="title">Create professor account</h1>
+
+      <form class="form form-grid-2" id="profForm" autocomplete="off">
+        <div class="form-item">
+          <label for="profFirstName">First Name</label>
+          <input id="profFirstName" type="text" required>
+        </div>
+
+        <div class="form-item">
+          <label for="profLastName">Last Name</label>
+          <input id="profLastName" type="text">
+        </div>
+
+        <div class="form-item">
+          <label for="profEmail">Email Address</label>
+          <input id="profEmail" type="email"
+                 required
+                 placeholder="professor@college.edu"
+                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
+                 title="Use only lowercase letters in email">
+        </div>
+
+        <div class="form-item">
+          <label for="profPassword">Set Password</label>
+          <input id="profPassword" type="password" required>
+        </div>
+
+        <div class="form-item">
+          <label for="profConfirm">Confirm Password</label>
+          <input id="profConfirm" type="password" required>
+        </div>
+
+        <div class="form-full">
+          <p id="profError" class="error-text"></p>
+          <button type="submit" class="btn-primary">Create professor account</button>
+          <div class="back-login-wrapper">
+            <a href="register.html" class="btn-back">Back to account type</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const profForm    = document.getElementById('profForm');
+    const profEmail   = document.getElementById('profEmail');
+    const profPwd     = document.getElementById('profPassword');
+    const profConfirm = document.getElementById('profConfirm');
+    const profError   = document.getElementById('profError');
+
+    profForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (/[A-Z]/.test(profEmail.value)) {
+        profError.textContent = 'Email must be in lowercase only.';
+        return;
+      }
+      if (!profForm.checkValidity()) {
+        profForm.reportValidity();
+        return;
+      }
+
+      if (profPwd.value !== profConfirm.value) {
+        profError.textContent = 'Password and Confirm password must match.';
+        return;
+      }
+
+      profError.textContent = '';
+
+      fetch('http://localhost:3000/api/register-professor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: document.getElementById('profFirstName').value,
+          lastName:  document.getElementById('profLastName').value,
+          email:     profEmail.value,
+          password:  profPwd.value
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        window.location.href = 'login.html';
+      })
+      .catch(() => {
+        profError.textContent = 'Error while saving data. Try again.';
+      });
+    });
+  </script>
+</body>
+</html>

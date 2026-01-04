@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="card">
+      <h1 class="title">Student Profile</h1>
+      <div id="profileContent">
+        Loading...
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const id = localStorage.getItem('userId');
+
+    if (!id) {
+      window.location.href = 'login.html';
+    } else {
+      fetch('http://localhost:3000/api/students/' + id)
+        .then(res => res.json())
+        .then(s => {
+          const div = document.getElementById('profileContent');
+          div.innerHTML = `
+            <p><strong>Name:</strong> ${s.firstName} ${s.lastName}</p>
+            <p><strong>Email:</strong> ${s.email}</p>
+            <p><strong>Course:</strong> ${s.course || '-'}</p>
+            <p><strong>Batch:</strong> ${s.batchNo || '-'}</p>
+            <p><strong>CGPA:</strong> ${s.cgpa ?? '-'}</p>
+            <p><strong>Arrears:</strong> ${s.noOfArrears ?? '-'}</p>
+          `;
+        })
+        .catch(() => {
+          document.getElementById('profileContent').textContent =
+            'Error loading profile.';
+        });
+    }
+  </script>
+</body>
+
+</html>

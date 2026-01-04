@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign in</title>
+  <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="card">
+      <h1 class="title">Sign in to your account</h1>
+
+        <form class="form" id="loginForm" autocomplete="off">
+
+        <label for="email">Email address</label>
+        <input id="email" type="email"
+               placeholder="Enter your email address..."
+               required
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
+               title="Use only lowercase letters in email">
+
+        <div class="field-row">
+          <label for="password">Password</label>
+          <a href="forgot.html" class="link-small">Forgot password?</a>
+        </div>
+
+        <input id="password" type="password"
+               placeholder="Enter your password..." required>
+
+        <p id="loginError" class="error-text"></p>
+
+        <button type="submit" class="btn-primary">Sign in</button>
+      </form>
+    </div>
+
+    <div class="card secondary">
+      <p>New user? <a href="register.html" class="link-main">Create an account</a>.</p>
+    </div>
+  </div>
+
+ <script>
+  const loginForm  = document.getElementById('loginForm');
+  const loginEmail = document.getElementById('email');
+  const loginPwd   = document.getElementById('password');
+  const loginErr   = document.getElementById('loginError');
+
+  loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (/[A-Z]/.test(loginEmail.value)) {
+      loginErr.textContent = 'Email must be in lowercase only.';
+      return;
+    }
+    if (!loginForm.checkValidity()) return;
+
+    loginErr.textContent = '';
+
+    fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: loginEmail.value,   
+        password: loginPwd.value
+      })
+    })
+      .then(async res => {
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.message || 'Login failed');
+        }
+        return res.json();
+      })
+      .then(data => {
+        localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('userRole', data.user.role);
+
+        // Redirect based on role
+        if (data.user.role === 'student') {
+          window.location.href = 'student.html';
+        } else if (data.user.role === 'officer') {
+          window.location.href = 'officer-dashboard.html';
+
+        } 
+      })
+      .catch(err => {
+        loginErr.textContent = err.message || 'Server error. Try again.';
+      });
+  });
+</script>
+
+
+</body>
+</html>
+
+
+

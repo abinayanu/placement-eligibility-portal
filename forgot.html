@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forgot password</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="card">
+      <h1 class="title">Reset your password</h1>
+
+      <form class="form" id="forgotForm">
+        <label for="fpEmail">Registered email address</label>
+        <input id="fpEmail" type="email"
+               placeholder="Enter your registered email"
+               required>
+
+        <label for="fpPassword">New password</label>
+        <input id="fpPassword" type="password"
+               placeholder="Enter new password" required>
+
+        <p id="fpError" class="error-text"></p>
+
+        <button type="submit" class="btn-primary">Update password</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const forgotForm = document.getElementById('forgotForm');
+    const fpEmail    = document.getElementById('fpEmail');
+    const fpPwd      = document.getElementById('fpPassword');
+    const fpError    = document.getElementById('fpError');
+
+    forgotForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (/[A-Z]/.test(fpEmail.value)) {
+        fpError.textContent = 'Email must be in lowercase only.';
+        return;
+      }
+      if (!forgotForm.checkValidity()) return;
+
+      fpError.textContent = '';
+
+      fetch('http://localhost:3000/api/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: fpEmail.value,
+          newPassword: fpPwd.value
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          fpError.textContent = data.message;
+        } else {
+          alert('Password updated. Please log in with new password.');
+          window.location.href = 'login.html';
+        }
+      })
+      .catch(() => {
+        fpError.textContent = 'Server error. Try again.';
+      });
+    });
+  </script>
+</body>
+</html>
